@@ -1,0 +1,20 @@
+{
+  "name": "react-native-airplay-btn",
+  "description": "AirPlay library for iOS",
+  "version": "0.0.1",
+  "author": {
+    "name": "Nadia Dillon",
+  },
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "ios",
+    "AirPlay"
+  ],
+  "main": "index",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ndillon/react-native-airplay-btn.git"
+  },
+  "dependencies": {}
+}
