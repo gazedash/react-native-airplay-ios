@@ -17,6 +17,37 @@ npm i react-native-airplay-btn --save
 
   - Rebuild your project and done!
 
+### How to create listeners
+
+```js
+import { NativeEventEmitter, NativeModules }
+const airPlayEvt = new NativeEventEmitter(NativeModules.AirPlay);
+
+```
+
+## Methods
+
+```js
+  // typically located in componentDidMount
+  AirPlay.startScan()
+  this.airPlayAvailable = airPlayEvt.addListener('airplayAvailable', devices => this.setState({
+        airPlayAvailable: devices.available,
+  })); --> returns a boolean
+
+  this.airPlayConnected = airPlayEvt.addListener('airplayConnected', devices => this.setState({
+        airPlayConnected: devices.connected,
+  })); --> returns a boolean
+```
+
+### Create AirPlay Button
+
+```js
+import { AirPlay } from 'react-native-airplay-btn';
+
+<AirPlayButton style={{height: 30, width: 30, justifyContent: 'center',alignItems:'center' }} />
+```
+
+
 
 ## Author
 

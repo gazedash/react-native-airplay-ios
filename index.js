@@ -7,8 +7,6 @@ import {
 
 const { AirPlay } = NativeModules;
 
-const airPlayEmitter = new NativeEventEmitter(AirPlay);
-
 let AirPlayButton = requireNativeComponent('AirPlayButton', RAirPlayButton);
 
 
@@ -33,7 +31,5 @@ export default {
   },
 
   Button: RAirPlayButton,
-
-  events: airPlayEmitter,
 
 }

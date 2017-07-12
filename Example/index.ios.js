@@ -9,15 +9,46 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  NativeModules,
+  NativeEventEmitter
 } from 'react-native';
-import RAirPlayButton from 'react-native-airplay'
+import AirPlay from 'react-native-airplay-btn'
+
+const airPlayEvt = new NativeEventEmitter(NativeModules.AirPlay);
 
 class Example extends Component {
+
+  constructor() {
+    super(props);
+    this.state = {
+      airPlayAvailable: false,
+      airPlayConnected: false,
+    }
+  }
+
+  componentDidMount() {
+    AirPlay.startScan()
+    this.airPlayAvailable = airPlayEvt.addListener('airplayAvailable', devices => this.setState({
+          airPlayAvailable: devices.available,
+    })); --> returns a boolean
+
+    this.airPlayConnected = airPlayEvt.addListener('airplayConnected', devices => this.setState({
+          airPlayConnected: devices.connected,
+    })); --> returns a boolean
+  }
+
+  componentWillUnmount() {
+    this.airPlayAvailable.remove();
+    this.airPlayConnected.remove();
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <RAirPlayButton style={{width: 40, height: 40, justifyContent: 'center', alignItems: 'center'}} />
+        {this.state.airPlayAvailable &&
+          <AirPlay.Button style={styles.button} />
+        }
       </View>
     );
   }
@@ -40,6 +71,12 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  button: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 AppRegistry.registerComponent('Example', () => Example);
