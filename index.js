@@ -7,6 +7,13 @@ import {
 
 const { AirPlay } = NativeModules;
 
+// Listen to emitted events
+
+const airPlayEmitter = new NativeEventEmitter(AirPlay);
+
+const isAvailable = airPlayEmitter.addListener('airplayAvailable', (devices) => devices.available)
+const isConnected = airPlayEmitter.addListener('airplayAvailable', (devices) => devices.connected)
+
 let AirPlayButton = requireNativeComponent('AirPlayButton', RAirPlayButton);
 
 
@@ -18,17 +25,18 @@ class RAirPlayButton extends Component {
   }
 }
 
+
 // Export methods and button component
 
 export default {
-  startScan: () => {
+  startScan: function() {
     AirPlay.startScan()
   },
 
-  isAlreadyConnected: () => {
+  isAlreadyConnected: function() {
     AirPlay.isAlreadyConnected()
   },
 
-  Button: RAirPlayButton
+  Button: RAirPlayButton,
 
 }
