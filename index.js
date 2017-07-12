@@ -18,18 +18,17 @@ class RAirPlayButton extends Component {
   }
 }
 
-
 // Export methods and button component
 
 export default {
-  startScan: function() {
+  startScan: () => {
     AirPlay.startScan()
   },
 
-  isAlreadyConnected: function() {
+  isAlreadyConnected: () => {
     AirPlay.isAlreadyConnected()
   },
 
-  Button: RAirPlayButton,
+  Button: RAirPlayButton
 
 }
