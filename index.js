@@ -12,7 +12,7 @@ const { AirPlay } = NativeModules;
 const airPlayEmitter = new NativeEventEmitter(AirPlay);
 
 const isAvailable = airPlayEmitter.addListener('airplayAvailable', (devices) => devices.available)
-const isConnected = airPlayEmitter.addListener('airplayAvailable', (devices) => devices.connected)
+const isConnected = airPlayEmitter.addListener('airplayConnected', (devices) => devices.connected)
 
 let AirPlayButton = requireNativeComponent('AirPlayButton', RAirPlayButton);
 
