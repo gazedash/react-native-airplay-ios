@@ -33,6 +33,9 @@ class AirPlay: RCTEventEmitter {
       }
     }
     self.sendEvent(withName: "airplayConnected", body: ["connected": isAirPlayPlaying])
+    if(!isAirPlayPlaying) {
+      startScan()
+    }
   }
 
   @objc func isAlredyConnected(callback: RCTResponseSenderBlock) -> Void {
