@@ -8,10 +8,6 @@
   "dependencies": {
     "react": "15.1.0",
     "react-native": "^0.28.0",
-<<<<<<< HEAD
     "react-native-airplay-btn": "file:.."
-=======
-    "react-native-airplay": "file:.."
->>>>>>> 07598c33f2f0996f21da36826ed2e3db3615cd99
   }
 }

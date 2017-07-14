@@ -14,7 +14,7 @@
   "main": "index",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ndillon/react-native-airplay-btn.git"
+    "url": "git@github.com:ndillon1/react-native-airplay-btn.git"
   },
   "dependencies": {}
 }

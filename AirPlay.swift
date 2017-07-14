@@ -38,16 +38,16 @@ class AirPlay: RCTEventEmitter {
     }
   }
 
-  @objc func isAlredyConnected(callback: RCTResponseSenderBlock) -> Void {
+  @objc func isAlreadyConnected(callback: RCTResponseSenderBlock) -> Void {
     let currentRoute = AVAudioSession.sharedInstance().currentRoute
     for output in currentRoute.outputs {
       if output.portType == AVAudioSessionPortAirPlay {
         print("Airplay Device connected with name: \(output.portName)")
-        callback([true])
+        callback([NSNull(), true])
         //return true
       }
     }
-    callback([false])
+    callback([NSNull(), false])
     //return false
   }
   override func supportedEvents() -> [String]! {
