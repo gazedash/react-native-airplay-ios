@@ -12,7 +12,7 @@ class AirPlay: RCTEventEmitter {
     if(currentRoute.outputs.count > 0) {
       isAvailable = true
       for output in currentRoute.outputs {
-        if output.portType == AVAudioSessionPortBluetoothA2DP {
+        if output.portType == AVAudioSessionPortAirPlay {
           self.sendEvent(withName: "airplayConnected", body: ["connected": true])
           print("connected")
         }
@@ -44,7 +44,7 @@ class AirPlay: RCTEventEmitter {
     var isAirPlayPlaying = false
 
     for output in currentRoute.outputs {
-      if output.portType == AVAudioSessionPortBluetoothA2DP {
+      if output.portType == AVAudioSessionPortAirPlay {
         print("Airplay Device connected with name: \(output.portName)")
         isAirPlayPlaying = true
         break;
