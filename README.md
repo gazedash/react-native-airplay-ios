@@ -29,7 +29,7 @@ const airPlayEvt = new NativeEventEmitter(NativeModules.AirPlay);
 
 ```js
   // typically located in componentDidMount
-  AirPlay.startScan()
+  AirPlay.startScan() --> // scan for airplay devices
   this.airPlayAvailable = airPlayEvt.addListener('airplayAvailable', devices => this.setState({
         airPlayAvailable: devices.available,
   })); --> returns a boolean
@@ -37,6 +37,8 @@ const airPlayEvt = new NativeEventEmitter(NativeModules.AirPlay);
   this.airPlayConnected = airPlayEvt.addListener('airplayConnected', devices => this.setState({
         airPlayConnected: devices.connected,
   })); --> returns a boolean
+
+  AirPlay.disconnect --> // disconnect from AVAudioSession
 ```
 
 ### Create AirPlay Button
@@ -52,5 +54,3 @@ import { AirPlay } from 'react-native-airplay-btn';
 ## Author
 
 Nadia Dillon
-
-## License

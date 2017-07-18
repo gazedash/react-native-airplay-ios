@@ -7,6 +7,8 @@ import {
 
 const { AirPlay } = NativeModules;
 
+console.log(AirPlay);
+
 // Listen to emitted events
 
 const airPlayEmitter = new NativeEventEmitter(AirPlay);
@@ -35,6 +37,10 @@ export default {
 
   isAlreadyConnected: function() {
     AirPlay.isAlreadyConnected()
+  },
+
+  disconnect: function() {
+    AirPlay.disconnect()
   },
 
   Button: RAirPlayButton,

@@ -1,5 +1,3 @@
-
-
 import Foundation
 import MediaPlayer
 
@@ -7,32 +5,46 @@ import MediaPlayer
 class AirPlay: RCTEventEmitter {
 
   @objc func startScan() {
-      print("init Airplay");
-      let currentRoute = AVAudioSession.sharedInstance().currentRoute
-      print("currentRoute", currentRoute)
-      var isAvailable = false
-      if(currentRoute.outputs.count > 0) {
-        isAvailable = true
-        for output in currentRoute.outputs {
-          if output.portType == AVAudioSessionPortAirPlay {
-            self.sendEvent(withName: "airplayConnected", body: ["connected": true])
-          }
+    print("init Airplay");
+    let currentRoute = AVAudioSession.sharedInstance().currentRoute
+    print("currentRoute", currentRoute)
+    var isAvailable = false
+    if(currentRoute.outputs.count > 0) {
+      isAvailable = true
+      for output in currentRoute.outputs {
+        if output.portType == AVAudioSessionPortBluetoothA2DP {
+          self.sendEvent(withName: "airplayConnected", body: ["connected": true])
+          print("connected")
         }
-        NotificationCenter.default.addObserver(
-          self,
-          selector: #selector(AirPlay.airplayChanged(sender:)),
-          name: NSNotification.Name.AVAudioSessionRouteChange,
-          object: AVAudioSession.sharedInstance())
       }
-      self.sendEvent(withName: "airplayAvailable", body: ["available": isAvailable])
+      NotificationCenter.default.addObserver(
+        self,
+        selector: #selector(AirPlay.airplayChanged(sender:)),
+        name: NSNotification.Name.AVAudioSessionRouteChange,
+        object: AVAudioSession.sharedInstance())
     }
+    self.sendEvent(withName: "airplayAvailable", body: ["available": isAvailable])
+    print(isAvailable)
+  }
+
+  @objc func disconnect() {
+    print("disconnect")
+    let session = AVAudioSession.sharedInstance()
+    do {
+      try session.setActive(false)
+      self.sendEvent(withName: "airplayAvailable", body: ["available": false])
+    } catch let error as NSError {
+      print(error)
+    }
+  }
+
 
   func airplayChanged(sender: NSNotification) {
     let currentRoute = AVAudioSession.sharedInstance().currentRoute
     var isAirPlayPlaying = false
 
     for output in currentRoute.outputs {
-      if output.portType == AVAudioSessionPortAirPlay {
+      if output.portType == AVAudioSessionPortBluetoothA2DP {
         print("Airplay Device connected with name: \(output.portName)")
         isAirPlayPlaying = true
         break;
