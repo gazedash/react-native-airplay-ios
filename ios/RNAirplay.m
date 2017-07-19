@@ -24,7 +24,7 @@ RCT_EXPORT_METHOD(startScan)
         isAvailable = true;
         for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
             if(output.portType == AVAudioSessionPortAirPlay) {
-                [self sendEventWithName:@"airplayConnected" body:@{@"connected": @true}];
+                [self sendEventWithName:@"airplayConnected" body:@{@"connected": @(true)}];
             }
         }
         [[NSNotificationCenter defaultCenter]
@@ -35,14 +35,14 @@ RCT_EXPORT_METHOD(startScan)
 
     }
 
-    [self sendEventWithName:@"airplayAvailable" body:@{@"available": @true}];
+    [self sendEventWithName:@"airplayAvailable" body:@{@"available": @(isAvailable)}];
 }
 
 RCT_EXPORT_METHOD(disconnect)
 {
     printf("disconnect Airplay");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self sendEventWithName:@"airplayAvailable" body:@{@"available": @false }];
+    [self sendEventWithName:@"airplayAvailable" body:@{@"available": @(false) }];
 }
 
 RCT_EXPORT_METHOD(airplayChanged:(NSNotification*)sender)
@@ -55,7 +55,7 @@ RCT_EXPORT_METHOD(airplayChanged:(NSNotification*)sender)
             break;
         }
     }
-    [self sendEventWithName:@"airplayConnected" body:@{@"available": @true}];
+    [self sendEventWithName:@"airplayConnected" body:@{@"available": @(isAirPlayPlaying)}];
 }
 
 - (NSArray<NSString *> *)supportedEvents {

@@ -5,11 +5,13 @@ import {
   NativeEventEmitter
 } from 'react-native';
 
-const { AirPlay } = NativeModules;
+const { RNAirplay } = NativeModules;
 
 // Listen to emitted events
 
-const airPlayEmitter = new NativeEventEmitter(AirPlay);
+const airPlayEmitter = new NativeEventEmitter(RNAirplay);
+
+// Register Events
 
 const isAvailable = airPlayEmitter.addListener('airplayAvailable', (devices) => devices.available)
 const isConnected = airPlayEmitter.addListener('airplayConnected', (devices) => devices.connected)
@@ -17,18 +19,8 @@ const isConnected = airPlayEmitter.addListener('airplayConnected', (devices) => 
 
 // Export methods and button component
 
-export default {
-  startScan: function() {
-    AirPlay.startScan()
-  },
+export const AirPlay = RNAirplay;
 
-  isAlreadyConnected: function() {
-    AirPlay.isAlreadyConnected()
-  },
+export const AirPlayListener = airPlayEmitter;
 
-  disconnect: function() {
-    AirPlay.disconnect();
-  }
-
-  Button: requireNativeComponent('RNAirplay'),
-}
+export const AirPlayButton = requireNativeComponent('RNAirplay');

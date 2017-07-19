@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		277F3F251F1F7460002BC819 /* RNAirplay.h in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5881CC2AC0600A0062D /* RNAirplay.h */; };
 		277F3F281F1F74E5002BC819 /* RNAirPlayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F3F271F1F74E5002BC819 /* RNAirPlayManager.m */; };
 		B3E7B58A1CC2AC0600A0062D /* RNAirplay.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNAirplay.m */; };
 /* End PBXBuildFile section */
@@ -118,7 +117,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				277F3F251F1F7460002BC819 /* RNAirplay.h in Sources */,
 				B3E7B58A1CC2AC0600A0062D /* RNAirplay.m in Sources */,
 				277F3F281F1F74E5002BC819 /* RNAirPlayManager.m in Sources */,
 			);
