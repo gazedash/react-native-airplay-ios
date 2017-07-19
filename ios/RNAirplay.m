@@ -1,6 +1,5 @@
 #import "RNAirplay.h"
-#import "RNAirplayButton.h"
-#import <React/RCTLog.h>
+#import "RNAirplayManager.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 
@@ -17,10 +16,10 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(startScan)
 {
+    printf("init Airplay");
     AVAudioSessionRouteDescription* currentRoute = [[AVAudioSession sharedInstance] currentRoute];
     BOOL isAvailable = false;
     NSUInteger routeNum = [[currentRoute outputs] count];
-    
     if(routeNum > 0) {
         isAvailable = true;
         for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
@@ -28,10 +27,22 @@ RCT_EXPORT_METHOD(startScan)
                 [self sendEventWithName:@"airplayConnected" body:@{@"connected": @true}];
             }
         }
-        
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector: @selector(airplayChanged:)
+         name:AVAudioSessionRouteChangeNotification
+         object:[AVAudioSession sharedInstance]];
+
     }
-    
+
     [self sendEventWithName:@"airplayAvailable" body:@{@"available": @true}];
+}
+
+RCT_EXPORT_METHOD(disconnect)
+{
+    printf("disconnect Airplay");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self sendEventWithName:@"airplayAvailable" body:@{@"available": @false }];
 }
 
 RCT_EXPORT_METHOD(airplayChanged:(NSNotification*)sender)
@@ -40,12 +51,15 @@ RCT_EXPORT_METHOD(airplayChanged:(NSNotification*)sender)
     BOOL isAirPlayPlaying = false;
     for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
         if(output.portType == AVAudioSessionPortAirPlay) {
-            RCTLogInfo(@"Airplay Device connected with name:", output.portName);
             isAirPlayPlaying = true;
             break;
         }
     }
     [self sendEventWithName:@"airplayConnected" body:@{@"available": @true}];
+}
+
+- (NSArray<NSString *> *)supportedEvents {
+    return @[@"airplayAvailable", @"airplayConnected"];
 }
 
 
