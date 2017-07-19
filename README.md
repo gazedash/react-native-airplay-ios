@@ -44,6 +44,7 @@ import { AirPlayButton } from 'react-native-airplay-btn';
 <Button style={{height: 30, width: 30, justifyContent: 'center', alignItems:'center' }} />
 ```
 
+Note: The AirPlay Button does not show in the simulator
 
 
 ## Author
