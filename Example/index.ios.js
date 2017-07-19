@@ -13,9 +13,8 @@ import {
   NativeModules,
   NativeEventEmitter
 } from 'react-native';
-import AirPlay from 'react-native-airplay-btn'
+import { AirPlay, AirPlayButton, AirPlayListener } from 'react-native-airplay-btn'
 
-const airPlayEvt = new NativeEventEmitter(NativeModules.AirPlay);
 
 class Example extends Component {
 
@@ -29,13 +28,13 @@ class Example extends Component {
 
   componentDidMount() {
     AirPlay.startScan()
-    this.airPlayAvailable = airPlayEvt.addListener('airplayAvailable', devices => this.setState({
+    this.airPlayAvailable = AirPlayListener.addListener('airplayAvailable', devices => this.setState({
           airPlayAvailable: devices.available,
-    })); --> returns a boolean
+    }));
 
-    this.airPlayConnected = airPlayEvt.addListener('airplayConnected', devices => this.setState({
+    this.airPlayConnected = AirPlayListener.addListener('airplayConnected', devices => this.setState({
           airPlayConnected: devices.connected,
-    })); --> returns a boolean
+    }));
   }
 
   componentWillUnmount() {
@@ -47,7 +46,7 @@ class Example extends Component {
     return (
       <View style={styles.container}>
         {this.state.airPlayAvailable &&
-          <AirPlay.Button style={styles.button} />
+          <AirPlayButton style={styles.button} />
         }
       </View>
     );
