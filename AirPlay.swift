@@ -29,14 +29,14 @@ class AirPlay: RCTEventEmitter {
 
   @objc func disconnect() {
     print("disconnect")
-    let session = AVAudioSession.sharedInstance()
-    do {
-      try session.setActive(false)
+    NotificationCenter.default.removeObserver(
+      self,
+      name: NSNotification.Name.AVAudioSessionRouteChange,
+      object: AVAudioSession.sharedInstance()
+      )
       self.sendEvent(withName: "airplayAvailable", body: ["available": false])
-    } catch let error as NSError {
-      print(error)
-    }
   }
+
 
 
   func airplayChanged(sender: NSNotification) {

@@ -7,8 +7,6 @@ import {
 
 const { AirPlay } = NativeModules;
 
-console.log(AirPlay);
-
 // Listen to emitted events
 
 const airPlayEmitter = new NativeEventEmitter(AirPlay);
