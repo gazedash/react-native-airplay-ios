@@ -13,18 +13,11 @@ RCT_EXPORT_MODULE();
 @synthesize bridge = _bridge;
 
 - (UIView *)view {
-    
-    CGRect viewRect = CGRectMake(0, 0, 40, 40);
-    
-    UIView* wrapperView = [[UIView alloc] initWithFrame: viewRect];
-    
-    wrapperView.translatesAutoresizingMaskIntoConstraints = false;
-    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame: wrapperView.bounds];
+
+    MPVolumeView *volumeView = [ MPVolumeView alloc ];
     volumeView.showsVolumeSlider = false;
-    [wrapperView addSubview: volumeView];
-    [volumeView sizeToFit];
-    
-    return wrapperView;
-    
+
+    return volumeView;
+
 }
 @end
