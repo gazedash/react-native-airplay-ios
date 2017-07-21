@@ -30,17 +30,8 @@ this.airPlayAvailable.remove()
 ## Methods
 
 ```js
-  // typically located in componentDidMount
-  AirPlay.startScan() --> // scan for airplay devices
-  this.airPlayAvailable = airPlayEvt.addListener('airplayAvailable', devices => this.setState({
-        airPlayAvailable: devices.available,
-  })); --> returns a boolean
-
-  this.airPlayConnected = airPlayEvt.addListener('airplayConnected', devices => this.setState({
-        airPlayConnected: devices.connected,
-  })); --> returns a boolean
-
   AirPlay.startScan();
+  
   AirPlay.disconnect();
 ```
 
