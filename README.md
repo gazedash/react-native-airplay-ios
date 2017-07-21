@@ -7,8 +7,6 @@ npm i react-native-airplay-btn --save
 react-native link
 ```
 
-  - Rebuild your project and done!
-
 ### How to create listeners
 
 ```js
@@ -32,7 +30,6 @@ this.airPlayAvailable.remove()
 ## Methods
 
 ```js
-<<<<<<< HEAD
   // typically located in componentDidMount
   AirPlay.startScan() --> // scan for airplay devices
   this.airPlayAvailable = airPlayEvt.addListener('airplayAvailable', devices => this.setState({
@@ -43,11 +40,8 @@ this.airPlayAvailable.remove()
         airPlayConnected: devices.connected,
   })); --> returns a boolean
 
-  AirPlay.disconnect --> // disconnect from AVAudioSession
-=======
   AirPlay.startScan();
   AirPlay.disconnect();
->>>>>>> feat/objc
 ```
 
 ### Create AirPlay Button
@@ -55,7 +49,7 @@ this.airPlayAvailable.remove()
 ```js
 import { AirPlayButton } from 'react-native-airplay-btn';
 
-<Button style={{height: 30, width: 30, justifyContent: 'center', alignItems:'center' }} />
+<Button style={{ height: 30, width: 30, justifyContent: 'center', alignItems:'center' }} />
 ```
 
 Note: The AirPlay Button does not show in the simulator
