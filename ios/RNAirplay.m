@@ -55,7 +55,7 @@ RCT_EXPORT_METHOD(airplayChanged:(NSNotification*)sender)
             break;
         }
     }
-    [self sendEventWithName:@"airplayConnected" body:@{@"available": @(isAirPlayPlaying)}];
+    [self sendEventWithName:@"airplayConnected" body:@{@"connected": @(isAirPlayPlaying)}];
 }
 
 - (NSArray<NSString *> *)supportedEvents {
