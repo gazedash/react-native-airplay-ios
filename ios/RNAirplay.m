@@ -22,9 +22,10 @@ RCT_EXPORT_METHOD(startScan)
     NSUInteger routeNum = [[currentRoute outputs] count];
     if(routeNum > 0) {
         isAvailable = true;
+        BOOL isConnected = true;
         for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
-            if(output.portType == AVAudioSessionPortAirPlay) {
-                [self sendEventWithName:@"airplayConnected" body:@{@"connected": @(true)}];
+            if([output.portType isEqualToString:AVAudioSessionPortAirPlay]) {
+                [self sendEventWithName:@"airplayConnected" body:@{@"connected": @(isConnected)}];
             }
         }
         [[NSNotificationCenter defaultCenter]
@@ -45,12 +46,13 @@ RCT_EXPORT_METHOD(disconnect)
     [self sendEventWithName:@"airplayAvailable" body:@{@"available": @(false) }];
 }
 
-RCT_EXPORT_METHOD(airplayChanged:(NSNotification*)sender)
+
+- (void)airplayChanged:(NSNotification *)sender
 {
     AVAudioSessionRouteDescription* currentRoute = [[AVAudioSession sharedInstance] currentRoute];
     BOOL isAirPlayPlaying = false;
     for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
-        if(output.portType == AVAudioSessionPortAirPlay) {
+        if([output.portType isEqualToString:AVAudioSessionPortAirPlay]) {
             isAirPlayPlaying = true;
             break;
         }
