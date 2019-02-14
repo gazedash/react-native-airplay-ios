@@ -54,15 +54,15 @@ RCT_EXPORT_METHOD(disconnect)
 {
     AVAudioSessionRouteDescription* currentRoute = [[AVAudioSession sharedInstance] currentRoute];
     BOOL isAirPlayPlaying = false;
-    NSString deviceName;
+    NSString* deviceName;
     for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
         if([output.portType isEqualToString:AVAudioSessionPortAirPlay]) {
             isAirPlayPlaying = true;
-            deviceName = outputPort.portName;
+            deviceName = output.portName;
             break;
         }
     }
-    [self sendEventWithName:@"airplayConnected" body:@{@"connected": @(isAirPlayPlaying), @"deviceName": @(deviceName)}];
+    [self sendEventWithName:@"airplayConnected" body:@{@"connected": @(isAirPlayPlaying), @"deviceName": deviceName}];
 }
 
 - (void) isAvailable;
