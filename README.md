@@ -12,20 +12,25 @@ react-native link
 ```js
 import { AirPlayListener } from react-native-airplay-btn
 
-this.airPlayAvailable = AirPlayListener.addListener('airplayAvailable', devices => this.setState({
-      airPlayAvailable: devices.available,
-})); --> returns a boolean
-
-this.airPlayConnected = AirPlayListener.addListener('airplayConnected', devices => this.setState({
-      airPlayConnected: devices.connected,
+this.airPlayConnected = AirPlayListener.addListener('deviceConnected', ({ devices }) => this.setState({
+    devices,
 })); --> returns a boolean
 
 
-// Remove Listeners in componentWillUnmount
-this.airPlayConnected.remove();
-this.airPlayAvailable.remove()
-
+// Remove Listener in componentWillUnmount
+this.deviceConnected.remove();
 ```
+
+Devices is an array of objects that contains information about currently connected audio output(s):
+```js
+[{deviceName: "Some Bluetooth Headphones Model", portType: "BluetoothA2DPOutput"}]
+// or
+[{deviceName: "Speakers", portType:"Speakers"}]
+// or
+[{deviceName: "Andrey’s Apple TV", portType: "AirPlay"}]
+```
+
+Probably it could just be an object, but internally AVAudioSessionRouteDescription returns array, so there *might* be a case when there is more than one device connected at the time.
 
 ## Methods
 
@@ -48,4 +53,10 @@ Note: The AirPlay Button does not show in the simulator
 
 ## Author
 
+Original author of the library:
+
 Nadia Dillon
+
+Modifications:
+
+Andrey Efremov (gazedash)
