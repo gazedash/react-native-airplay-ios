@@ -12,8 +12,8 @@ react-native link
 ```js
 import { AirPlayListener } from react-native-airplay-btn
 
-this.airPlayConnected = AirPlayListener.addListener('deviceConnected', device => this.setState({
-    device,
+this.airPlayConnected = AirPlayListener.addListener('deviceConnected', ({ devices }) => this.setState({
+    devices,
 })); --> returns a boolean
 
 
@@ -21,14 +21,16 @@ this.airPlayConnected = AirPlayListener.addListener('deviceConnected', device =>
 this.deviceConnected.remove();
 ```
 
-Device is an object that contains information about currently connected audio output:
+Devices is an array of objects that contains information about currently connected audio output(s):
 ```js
-{deviceName: "Some Bluetooth Headphones Model", portType: "BluetoothA2DPOutput"}
+[{deviceName: "Some Bluetooth Headphones Model", portType: "BluetoothA2DPOutput"}]
 // or
-{deviceName: "Speaker", portType: "Speaker"}
+[{deviceName: "Speakers", portType:"Speakers"}]
 // or
-{deviceName: "Andrey’s Apple TV", portType: "AirPlay"}
+[{deviceName: "Andrey’s Apple TV", portType: "AirPlay"}]
 ```
+
+Probably it could just be an object, but internally AVAudioSessionRouteDescription returns array, so there *might* be a case when there is more than one device connected at the time.
 
 ## Methods
 
