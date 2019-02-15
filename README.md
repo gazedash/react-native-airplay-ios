@@ -12,7 +12,7 @@ react-native link
 ```js
 import { AirPlayListener } from react-native-airplay-btn
 
-this.airPlayConnected = AirPlayListener.addListener('airplayConnected', device => this.setState({
+this.airPlayConnected = AirPlayListener.addListener('deviceConnected', device => this.setState({
     device,
 })); --> returns a boolean
 
