@@ -22,53 +22,39 @@ RCT_EXPORT_METHOD(startScan)
         for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
             deviceName = output.portName;
             portType = output.portType;
-            [self sendEventWithName:@"airplayConnected" body:@{@"deviceName": deviceName, @"portType": portType}];
+            [self sendEventWithName:@"deviceConnected" body:@{@"deviceName": deviceName, @"portType": portType}];
         }
 
         [[NSNotificationCenter defaultCenter]
         addObserver:self
-        selector: @selector(airplayChanged:)
+        selector: @selector(deviceChanged:)
         name:AVAudioSessionRouteChangeNotification
         object:[AVAudioSession sharedInstance]];
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self isAvailable];
+            [self deviceChanged];
         });
         }
 
 RCT_EXPORT_METHOD(disconnect)
         {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        [self sendEventWithName:@"airplayAvailable" body:@{
-            @"available": @(false)
-        }];
         }
 
 
-- (void)airplayChanged:(NSNotification *)sender {
+- (void)deviceChanged:(NSNotification *)sender {
     AVAudioSessionRouteDescription *currentRoute = [[AVAudioSession sharedInstance] currentRoute];
     NSString *deviceName;
-
     NSString *portType;
     for (AVAudioSessionPortDescription *output in currentRoute.outputs) {
         deviceName = output.portName;
         portType = output.portType;
-        [self sendEventWithName:@"airplayConnected" body:@{@"deviceName": deviceName, @"portType": portType}];
+        [self sendEventWithName:@"deviceConnected" body:@{@"deviceName": deviceName, @"portType": portType}];
     }
-}
-
-- (void)isAvailable; {
-    AVAudioSessionRouteDescription *currentRoute = [[AVAudioSession sharedInstance] currentRoute];
-    BOOL isAvailable = false;
-    int routeCount = (int) [[currentRoute outputs] count];
-    if (routeCount > 1) {
-        isAvailable = true;
-    }
-    [self sendEventWithName:@"airplayAvailable" body:@{@"available": @(isAvailable)}];
 }
 
 - (NSArray<NSString *> *)supportedEvents {
-    return @[@"airplayAvailable", @"airplayConnected"];
+    return @[@"deviceConnected"];
 }
 
 @end
