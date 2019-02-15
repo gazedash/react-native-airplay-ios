@@ -12,19 +12,22 @@ react-native link
 ```js
 import { AirPlayListener } from react-native-airplay-btn
 
-this.airPlayAvailable = AirPlayListener.addListener('airplayAvailable', devices => this.setState({
-      airPlayAvailable: devices.available,
-})); --> returns a boolean
-
-this.airPlayConnected = AirPlayListener.addListener('airplayConnected', devices => this.setState({
-      airPlayConnected: devices.connected,
+this.airPlayConnected = AirPlayListener.addListener('airplayConnected', device => this.setState({
+    device,
 })); --> returns a boolean
 
 
-// Remove Listeners in componentWillUnmount
-this.airPlayConnected.remove();
-this.airPlayAvailable.remove()
+// Remove Listener in componentWillUnmount
+this.deviceConnected.remove();
+```
 
+Device is an object that contains information about currently connected audio output:
+```js
+{deviceName: "Some Bluetooth Headphones Model", portType: "BluetoothA2DPOutput"}
+// or
+{deviceName: "Speaker", portType: "Speaker"}
+// or
+{deviceName: "Andrey’s Apple TV", portType: "AirPlay"}
 ```
 
 ## Methods
@@ -48,4 +51,10 @@ Note: The AirPlay Button does not show in the simulator
 
 ## Author
 
+Original author of the library:
+
 Nadia Dillon
+
+Modifications:
+
+Andrey Efremov (gazedash)
