@@ -7,79 +7,58 @@
 @implementation RNAirplay
 @synthesize bridge = _bridge;
 
-- (dispatch_queue_t)methodQueue
-{
+- (dispatch_queue_t)methodQueue {
     return dispatch_get_main_queue();
 }
 
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(startScan)
-{
-    printf("init Airplay");
-    AVAudioSessionRouteDescription* currentRoute = [[AVAudioSession sharedInstance] currentRoute];
-    BOOL isAvailable = false;
-    int routeCount = (int)[[currentRoute outputs] count];
-    BOOL isSpeaker = ([[[[currentRoute outputs] objectAtIndex:0] portName] isEqualToString:@"Speaker"]);
-    if(routeCount > 0 && !isSpeaker) {
-        isAvailable = true;
-        BOOL isConnected = true;
-        for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
-            if([output.portType isEqualToString:AVAudioSessionPortAirPlay]) {
-                [self sendEventWithName:@"airplayConnected" body:@{@"connected": @(isConnected)}];
-            }
-        }
+        {
+        // Add observer which will call "deviceChanged" method when audio outpout changes
+        // e.g. headphones connect / disconnect
         [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector: @selector(airplayChanged:)
-         name:AVAudioSessionRouteChangeNotification
-         object:[AVAudioSession sharedInstance]];
-    }
-    
-    [self sendEventWithName:@"airplayAvailable" body:@{@"available": @(isAvailable)}];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self isAvailable];
-    });
-}
+        addObserver:self
+        selector: @selector(deviceChanged:)
+        name:AVAudioSessionRouteChangeNotification
+        object:[AVAudioSession sharedInstance]];
+
+        // also call sendEventAboutConnectedDevice method immediately to send currently connected device
+        // at the time of startScan
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self sendEventAboutConnectedDevice];
+        });
+        }
 
 RCT_EXPORT_METHOD(disconnect)
-{
-    printf("disconnect Airplay");
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self sendEventWithName:@"airplayAvailable" body:@{@"available": @(false) }];
-}
-
-
-- (void)airplayChanged:(NSNotification *)sender
-{
-    AVAudioSessionRouteDescription* currentRoute = [[AVAudioSession sharedInstance] currentRoute];
-    BOOL isAirPlayPlaying = false;
-    for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
-        if([output.portType isEqualToString:AVAudioSessionPortAirPlay]) {
-            isAirPlayPlaying = true;
-            break;
+        {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         }
-    }
-    [self sendEventWithName:@"airplayConnected" body:@{@"connected": @(isAirPlayPlaying)}];
+
+
+- (void)deviceChanged:(NSNotification *)sender {
+    // Get current audio output
+    [self sendEventAboutConnectedDevice];
 }
 
-
-- (void) isAvailable;
+// Gets current devices and sends an event to React Native with information about it
+- (void) sendEventAboutConnectedDevice;
 {
-    printf("init Available");
-    AVAudioSessionRouteDescription* currentRoute = [[AVAudioSession sharedInstance] currentRoute];
-    BOOL isAvailable = false;
-    int routeCount = (int)[[currentRoute outputs] count];
-    BOOL isSpeaker = ([[[[currentRoute outputs] objectAtIndex:0] portName] isEqualToString:@"Speaker"]);
-    if(routeCount > 0 &&!isSpeaker) {
-        isAvailable = true;
-    }
-    [self sendEventWithName:@"airplayAvailable" body:@{@"available": @(isAvailable)}];
+    AVAudioSessionRouteDescription *currentRoute = [[AVAudioSession sharedInstance] currentRoute];
+    NSString *deviceName;
+    NSString *portType;
+    NSMutableArray *devices = [NSMutableArray array];
+        for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
+            deviceName = output.portName;
+            portType = output.portType;
+            NSDictionary *device = @{ @"deviceName" : deviceName, @"portType" : portType};
+            [devices addObject: device];
+        }
+        [self sendEventWithName:@"deviceConnected" body:@{@"devices": devices}];
 }
 
 - (NSArray<NSString *> *)supportedEvents {
-    return @[@"airplayAvailable", @"airplayConnected"];
+    return @[@"deviceConnected"];
 }
-
 
 @end

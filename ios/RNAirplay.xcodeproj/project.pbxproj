@@ -27,6 +27,7 @@
 		134814201AA4EA6300B7C361 /* libRNAirplay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNAirplay.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		277F3F261F1F74E0002BC819 /* RNAirplayManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNAirplayManager.h; sourceTree = "<group>"; };
 		277F3F271F1F74E5002BC819 /* RNAirPlayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNAirPlayManager.m; sourceTree = "<group>"; };
+		55EB03022215BAEB0009CF72 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNAirplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNAirplay.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNAirplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNAirplay.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -53,6 +54,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				55EB03022215BAEB0009CF72 /* Media.xcassets */,
 				277F3F261F1F74E0002BC819 /* RNAirplayManager.h */,
 				277F3F271F1F74E5002BC819 /* RNAirPlayManager.m */,
 				B3E7B5881CC2AC0600A0062D /* RNAirplay.h */,
