@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   requireNativeComponent,
   NativeModules,
-  NativeEventEmitter
-} from 'react-native';
+  NativeEventEmitter,
+  Platform
+} from "react-native";
 
 const { RNAirplay } = NativeModules;
 
@@ -16,4 +17,5 @@ export const AirPlay = RNAirplay;
 
 export const AirPlayListener = airPlayEmitter;
 
-export const AirPlayButton = requireNativeComponent('RNAirplay');
+export const AirPlayButton =
+  Platform.OS === "ios" ? requireNativeComponent("RNAirplay") : () => null;
