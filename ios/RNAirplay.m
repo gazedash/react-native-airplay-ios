@@ -32,7 +32,7 @@ RCT_EXPORT_METHOD(startScan)
         object:[AVAudioSession sharedInstance]];
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self deviceChanged];
+            [self getConnectedDevice];
         });
         }
 
@@ -52,6 +52,19 @@ RCT_EXPORT_METHOD(disconnect)
         [self sendEventWithName:@"deviceConnected" body:@{@"deviceName": deviceName, @"portType": portType}];
     }
 }
+
+- (void) getConnectedDevice;
+{
+    AVAudioSessionRouteDescription *currentRoute = [[AVAudioSession sharedInstance] currentRoute];
+    NSString *deviceName;
+    NSString *portType;
+    for (AVAudioSessionPortDescription *output in currentRoute.outputs) {
+        deviceName = output.portName;
+        portType = output.portType;
+        [self sendEventWithName:@"deviceConnected" body:@{@"deviceName": deviceName, @"portType": portType}];
+    }
+}
+
 
 - (NSArray<NSString *> *)supportedEvents {
     return @[@"deviceConnected"];
