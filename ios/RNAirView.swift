@@ -17,22 +17,44 @@ extension UIView {
 
 @objc(RNAirView) class RNAirView:UIView {
     var _volumeView: MPVolumeView? = nil
-    var source: String?
+    var source: Dictionary<String, String>?
 
-    @objc public func setSource(_ source: String?) {
-        let url = URL(string: source ?? "")
-        let imageData = try? Data(contentsOf: url!)
-        let image = UIImage(data:imageData!)
+    @objc public func setSource(_ source: Dictionary<String, String>) {
         self.source = source
+        let normal = source["normal"]
+        let highlighted = source["highlighted"]
+        let selected = source["selected"]
+        let focused = source["focused"]
+        let disabled = source["disabled"]
+
         if let vv = self._volumeView {
-        vv.setRouteButtonImage(image, for: .normal)
-        vv.setRouteButtonImage(image, for: .highlighted)
-        vv.setRouteButtonImage(image, for: .selected)
-                    if #available(iOS 9.0, *) {
-                vv.setRouteButtonImage(image, for: .focused)
-                    }
-        vv.setRouteButtonImage(image, for: .disabled)
+        if let normalImage = self.getImage(source: normal) {
+            vv.setRouteButtonImage(normalImage, for: .normal)
         }
+        if let highlightedImage = self.getImage(source: highlighted) {
+            vv.setRouteButtonImage(highlightedImage, for: .highlighted)
+        }
+        if let selectedImage = self.getImage(source: selected) {
+            vv.setRouteButtonImage(selectedImage, for: .selected)
+        }
+        if let focusedImage = self.getImage(source: focused) {
+            if #available(iOS 9.0, *) {
+                vv.setRouteButtonImage(focusedImage, for: .focused)
+            }
+        }
+        if let disabledImage = self.getImage(source: disabled) {
+            vv.setRouteButtonImage(disabledImage, for: .disabled)
+        }
+        }
+    }
+
+    func getImage(source: String?) -> UIImage? {
+        if source == nil {
+            return nil
+        }
+        let data : Data = Data(base64Encoded: source!, options: .ignoreUnknownCharacters)!
+
+        return UIImage(data:data)
     }
 
         override func layoutSubviews() {
@@ -41,39 +63,20 @@ extension UIView {
         if _volumeView == nil {
             embed()
         }
-        // } else {
-        //     _volumeView?.frame = bounds
-        // }
     }
 
     private func embed() {
         let volumeView = MPVolumeView()
-        // volumeView.frame = bounds
         volumeView.showsVolumeSlider = false;
-        // volumeView.layer.borderWidth = 1
-        // volumeView.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
         volumeView.sizeToFit()
         self._volumeView = volumeView
-
-        setSource(self.source)
+        setSource(self.source!)
         addSubview(volumeView)
         self.frame = volumeView.frame;
-        // self.sizeToFit()
     }
 
      override init(frame: CGRect) {
         super.init(frame: frame)
-        print("hahahahahahahahaha init")
-
     }
      required init?(coder aDecoder: NSCoder) { fatalError("nope") }
-    
-    // override func viewDidLoad() {
-    //     super.viewDidLoad()
-    // }
-
-//         override func viewDidAppear(_ animated: Bool) {
-//         super.viewDidAppear(animated)
-// print("hahahahahahahahaha view did appear hahah")
-//     }
 }
