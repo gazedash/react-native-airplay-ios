@@ -19,10 +19,11 @@ extension UIView {
     var _volumeView: MPVolumeView? = nil
     var source: String?
 
-    @objc public func setSource(_ source: String) {
+    @objc public func setSource(_ source: String?) {
         let url = URL(string: source ?? "")
         let imageData = try? Data(contentsOf: url!)
         let image = UIImage(data:imageData!)
+        self.source = source
         if let vv = self._volumeView {
         vv.setRouteButtonImage(image, for: .normal)
         vv.setRouteButtonImage(image, for: .highlighted)
@@ -39,32 +40,25 @@ extension UIView {
 
         if _volumeView == nil {
             embed()
-        } else {
-            _volumeView?.view.frame = bounds
         }
+        // } else {
+        //     _volumeView?.frame = bounds
+        // }
     }
 
     private func embed() {
-    //  guard
-            let parentVC = parentViewController,
-        //     else {
-        //     return
-        // }
-
         let volumeView = MPVolumeView()
-        let doc = PSPDFDocument(url: documentURL)
-        let vc = volumeView
-        parentVC.addChild(vc)
-        addSubview(vc.view)
-        vc.view.frame = bounds
-        vc.didMove(toParentViewController: parentVC)
-        self._volumeView = vc
+        // volumeView.frame = bounds
+        volumeView.showsVolumeSlider = false;
+        // volumeView.layer.borderWidth = 1
+        // volumeView.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
+        volumeView.sizeToFit()
+        self._volumeView = volumeView
 
-        vc.showsVolumeSlider = true;
-        vc.layer.borderWidth = 1
-        vc.frame = bounds
-        vc.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
-        // self.addSubview(volumeView)
+        setSource(self.source)
+        addSubview(volumeView)
+        self.frame = volumeView.frame;
+        // self.sizeToFit()
     }
 
      override init(frame: CGRect) {
