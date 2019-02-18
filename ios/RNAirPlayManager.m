@@ -15,6 +15,6 @@ RCT_EXPORT_MODULE();
     return [RNAirView new];
 }
 
-RCT_EXPORT_VIEW_PROPERTY(source, NSString)
+RCT_EXPORT_VIEW_PROPERTY(source, NSDictionary*)
 
 @end

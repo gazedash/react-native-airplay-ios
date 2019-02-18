@@ -9,9 +9,6 @@
 
 @interface RNAirplayManager : RCTViewManager
 
-@property (nonatomic, assign) NSString *src;
-@property (nonatomic, strong) MPVolumeView *volumeView;
-
 @end
 
 #endif
