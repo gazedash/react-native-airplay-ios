@@ -14,26 +14,26 @@
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(startScan)
-        {
-        // Add observer which will call "deviceChanged" method when audio outpout changes
-        // e.g. headphones connect / disconnect
-        [[NSNotificationCenter defaultCenter]
-        addObserver:self
-        selector: @selector(deviceChanged:)
-        name:AVAudioSessionRouteChangeNotification
-        object:[AVAudioSession sharedInstance]];
+{
+    // Add observer which will call "deviceChanged" method when audio outpout changes
+    // e.g. headphones connect / disconnect
+    [[NSNotificationCenter defaultCenter]
+    addObserver:self
+    selector: @selector(deviceChanged:)
+    name:AVAudioSessionRouteChangeNotification
+    object:[AVAudioSession sharedInstance]];
 
-        // also call sendEventAboutConnectedDevice method immediately to send currently connected device
-        // at the time of startScan
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self sendEventAboutConnectedDevice];
-        });
-        }
+    // Also call sendEventAboutConnectedDevice method immediately to send currently connected device
+    // at the time of startScan
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self sendEventAboutConnectedDevice];
+    });
+}
 
 RCT_EXPORT_METHOD(disconnect)
-        {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-        }
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 
 - (void)deviceChanged:(NSNotification *)sender {
@@ -48,13 +48,13 @@ RCT_EXPORT_METHOD(disconnect)
     NSString *deviceName;
     NSString *portType;
     NSMutableArray *devices = [NSMutableArray array];
-        for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
-            deviceName = output.portName;
-            portType = output.portType;
-            NSDictionary *device = @{ @"deviceName" : deviceName, @"portType" : portType};
-            [devices addObject: device];
-        }
-        [self sendEventWithName:@"deviceConnected" body:@{@"devices": devices}];
+    for (AVAudioSessionPortDescription * output in currentRoute.outputs) {
+        deviceName = output.portName;
+        portType = output.portType;
+        NSDictionary *device = @{ @"deviceName" : deviceName, @"portType" : portType};
+        [devices addObject: device];
+    }
+    [self sendEventWithName:@"deviceConnected" body:@{@"devices": devices}];
 }
 
 - (NSArray<NSString *> *)supportedEvents {
