@@ -2,19 +2,6 @@ import Foundation
 import UIKit
 import MediaPlayer
 
-extension UIView {
-    var parentViewController: UIViewController? {
-        var parentResponder: UIResponder? = self
-        while parentResponder != nil {
-            parentResponder = parentResponder!.next
-            if let viewController = parentResponder as? UIViewController {
-                return viewController
-            }
-        }
-        return nil
-    }
-}
-
 @objc(RNAirView) class RNAirView:UIView {
     var _volumeView: MPVolumeView? = nil
     var source: Dictionary<String, String>?
