@@ -7,6 +7,8 @@ npm i react-native-airplay-ios --save
 react-native link
 ```
 
+Check the [example](https://github.com/gazedash/react-native-airplay-ios/blob/master/Example/App.js) project
+
 Make sure to enable Swift support in your project, if you haven't done it yet.
 Xcode -> New file -> Swift file -> Create bridging headers
 
