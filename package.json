@@ -21,6 +21,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
+    "hoist-non-react-statics": "3.3.0",
     "react": "^16.6.3",
     "react-native": "^0.57.8"
   }
