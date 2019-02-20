@@ -12,7 +12,8 @@
     "AirPlay"
   ],
   "files": [
-    "/lib"
+    "/lib",
+    "/ios"
   ],
   "main": "lib/index.js",
   "repository": {
