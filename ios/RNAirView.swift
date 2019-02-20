@@ -57,7 +57,9 @@ import MediaPlayer
         volumeView.showsVolumeSlider = false;
         volumeView.sizeToFit()
         self._volumeView = volumeView
-        setSource(self.source!)
+        if (source != nil) {
+            setSource(self.source!)
+        }
         addSubview(volumeView)
         self.frame = volumeView.frame;
     }
