@@ -61,4 +61,9 @@ RCT_EXPORT_METHOD(disconnect)
     return @[@"deviceConnected"];
 }
 
++ (BOOL)requiresMainQueueSetup
+{
+    return YES;
+}
+
 @end
