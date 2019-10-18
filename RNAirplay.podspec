@@ -1,4 +1,4 @@
-package = JSON.parse(File.read(File.join(__dir__, '../package.json')))
+package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
 Pod::Spec.new do |s|
   s.name         = "RNAirplay"
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.homepage       = package['repository']['url']
   s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/author/RNAirplay.git", :tag => "master" }
-  s.source_files  = "RNAirplay/**/*.{h,m}"
+  s.source_files  = "ios/**/*.{h,m}"
   s.requires_arc = true
 
 

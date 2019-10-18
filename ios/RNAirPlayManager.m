@@ -1,6 +1,6 @@
 #import "RNAirplayManager.h"
 #import "RNAirplay.h"
-#import "RNAirplay-swift.h"
+//#import "RNAirplay/RNAirplay-Swift.h"
 #import <React/RCTBridge.h>
 #import <React/UIView+React.h>
 #import <Foundation/Foundation.h>
@@ -12,7 +12,7 @@
 RCT_EXPORT_MODULE();
 
 - (UIViewController *)view {
-    return [RNAirView new];
+    return [RNAirplay new];
 }
 
 RCT_EXPORT_VIEW_PROPERTY(source, NSDictionary*)
