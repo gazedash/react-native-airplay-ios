@@ -1,6 +1,7 @@
 {
   "name": "react-native-airplay-ios",
   "description": "AirPlay library for iOS",
+  "summary": "Summary for PODS",
   "version": "1.0.4",
   "author": {
     "name": "Andrey Efremov"
