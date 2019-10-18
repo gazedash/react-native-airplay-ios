@@ -13,6 +13,7 @@
     "AirPlay"
   ],
   "files": [
+    "/RNAirplay.podspec",
     "/lib",
     "/ios"
   ],
