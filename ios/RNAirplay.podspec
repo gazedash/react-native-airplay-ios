@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.name         = "RNAirplay"
   s.version        = package['version']
   s.summary        = package['description']
-  s.description    = package['description']
+  s.description    = package['summary']
   s.license        = package['license']
   s.author         = package['author']
   s.homepage       = package['repository']['url']
