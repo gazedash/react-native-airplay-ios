@@ -2,7 +2,8 @@ import Foundation
 import UIKit
 import MediaPlayer
 
-@objc(RNAirView) class RNAirView:UIView {
+@objc(RNAirView) 
+public class RNAirView:UIView {
     var _volumeView: MPVolumeView? = nil
     var source: Dictionary<String, String>?
 
@@ -44,7 +45,7 @@ import MediaPlayer
         return UIImage(data:data)
     }
 
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
 
         if _volumeView == nil {
