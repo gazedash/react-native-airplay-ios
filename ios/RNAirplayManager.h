@@ -7,6 +7,8 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 
+@class RNAirView;
+
 @interface RNAirplayManager : RCTViewManager
 
 @end

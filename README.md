@@ -1,7 +1,9 @@
-# react-native-airplay-btn
+# react-native-airplay-ios
+
 AirPlay library for iOS
 
 ## Installation with Automatic Linking
+
 ```js
 npm i react-native-airplay-ios --save
 react-native link
@@ -15,7 +17,7 @@ Xcode -> New file -> Swift file -> Create bridging headers
 ### How to create listeners
 
 ```js
-import { AirPlayListener, AirPlay } from react-native-airplay-btn
+import { AirPlayListener, AirPlay } from react-native-airplay-ios
 
 // Setups native listeners which detect audio output route changes
 AirPlay.startScan()
@@ -29,79 +31,85 @@ this.airPlayConnected = AirPlayListener.addListener('deviceConnected', ({ device
 this.deviceConnected.remove();
 ```
 
-Also you can import ```withAirPlayControl``` hoc and wrap your view component like so:
+Also you can import `withAirPlayControl` hoc and wrap your view component like so:
 
 ```js
-import React from 'react'
-import { View, Text } from 'react-native'
-import { withAirPlayControl } from 'react-native-airplay-ios'
+import React from "react";
+import { View, Text } from "react-native";
+import { withAirPlayControl } from "react-native-airplay-ios";
 
 type Device = {
   deviceName: string,
-  portName: string,
-}
+  portName: string
+};
 
 type Props = {
-  devices: Device[],
-}
+  devices: Device[]
+};
 
 // Shows currently connected audio output devices
 export const AirPlayDevices = withAirPlayControl(({ devices }: Props) => (
-  <View style={{ flex: 1, alignItems: 'center' }}>
-    {devices.map((device) => (
+  <View style={{ flex: 1, alignItems: "center" }}>
+    {devices.map(device => (
       <Text>
         {device.deviceName} {device.portName}
       </Text>
     ))}
   </View>
-))
+));
 ```
 
 Devices is an array of objects that contains information about currently connected audio output(s):
+
 ```js
-[{deviceName: "Some Bluetooth Headphones Model", portType: "BluetoothA2DPOutput"}]
-// or
-[{deviceName: "Speakers", portType:"Speakers"}]
-// or
-[{deviceName: "Andrey’s Apple TV", portType: "AirPlay"}]
+[
+  {
+    deviceName: "Some Bluetooth Headphones Model",
+    portType: "BluetoothA2DPOutput"
+  }
+][
+  // or
+  { deviceName: "Speakers", portType: "Speakers" }
+][
+  // or
+  { deviceName: "Andrey’s Apple TV", portType: "AirPlay" }
+];
 ```
 
-Note:
-
-Probably it could just be an object, but internally AVAudioSessionRouteDescription returns array, so there *might* be a case when there is more than one device connected at the time.
+> Note: Probably it could just be an object, but internally AVAudioSessionRouteDescription returns array, so there _might_ be a case when there is more than one device connected at the time.
 
 ## Methods
 
 ```js
-  AirPlay.startScan();
-  
-  AirPlay.disconnect();
+AirPlay.startScan();
+
+AirPlay.disconnect();
 ```
 
 ### Create AirPlay Button
 
 ```js
-import { AirPlayButton } from 'react-native-airplay-btn';
-<AirPlayButton source={{
-            disabled:
-              '',
-            normal:
-              '',
-            focused:
-              '',
-            highlighted:
-              '',
-            selected:
-              '',
-          }} />
+import { AirPlayButton } from "react-native-airplay-ios";
+<AirPlayButton
+  source={{
+    disabled: "",
+    normal: "",
+    focused: "",
+    highlighted: "",
+    selected: ""
+  }}
+/>;
 ```
 
 Source is optional, as well as the states. You can pass a single state if you want, or don't pass this prop at all.
+
 The string is base64 encoded image.
+
 The size of image is 29x29.
+
 This limitation is due to the fact that AirPlayButton is a native component under the hood. It uses MPVolumeView to show routes button.
 
-Note: The AirPlay Button does not show in the simulator
+> Note: The AirPlay Button does not show in the simulator
 
 ## Author
 
