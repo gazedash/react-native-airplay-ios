@@ -14,6 +14,7 @@ public class RNAirView:UIView {
         let selected = source["selected"]
         let focused = source["focused"]
         let disabled = source["disabled"]
+        let rawImageRenderingMode = source["imageRenderingMode"]
 
         if let vv = self._volumeView {
             if let normalImage = self.getImage(source: normal) {
@@ -32,6 +33,23 @@ public class RNAirView:UIView {
             }
             if let disabledImage = self.getImage(source: disabled) {
                 vv.setRouteButtonImage(disabledImage, for: .disabled)
+            }
+        }
+        
+        if rawImageRenderingMode == "always-template" {
+            let imageRenderingMode = rawImageRenderingMode == "always-template"
+                ? UIImage.RenderingMode.alwaysTemplate
+                : rawImageRenderingMode == "always-original"
+                ? .alwaysOriginal
+                : .automatic
+            for view in self._volumeView?.subviews ?? [] {
+                if let buttonOnVolumeView = view as? UIButton {
+                    self._volumeView?.setRouteButtonImage(
+                        buttonOnVolumeView.currentImage?.withRenderingMode(imageRenderingMode),
+                        for: .normal
+                    )
+                    break;
+                }
             }
         }
     }
