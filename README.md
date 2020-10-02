@@ -96,7 +96,8 @@ import { AirPlayButton } from "react-native-airplay-ios";
     normal: "",
     focused: "",
     highlighted: "",
-    selected: ""
+    selected: "",
+    imageRenderingMode: "always-original" // or always-template
   }}
 />;
 ```
