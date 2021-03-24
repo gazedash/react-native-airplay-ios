@@ -1,6 +1,6 @@
 #import "RNAirplayManager.h"
 #import "RNAirplay.h"
-#import "RNAirplay-Swift.h"
+#import <RNAirplay/RNAirplay-Swift.h>
 #import <React/RCTBridge.h>
 #import <React/UIView+React.h>
 #import <Foundation/Foundation.h>
